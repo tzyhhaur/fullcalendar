@@ -1,0 +1,28 @@
+From fa0db4e99d10ff10d268dec83ce69f942df7d9de Mon Sep 17 00:00:00 2001
+From: Jonathan Hogervorst <jonathan@buzzera.com>
+Date: Sun, 4 Jan 2015 16:23:36 +0100
+Subject: [PATCH] Possible fix for overlapping inverse background events (issue
+ 2386)
+
+---
+ src/common/Grid.events.js | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/common/Grid.events.js b/src/common/Grid.events.js
+index 3f35a35..f23adda 100644
+--- a/src/common/Grid.events.js
++++ b/src/common/Grid.events.js
+@@ -751,7 +751,9 @@ Grid.mixin({
+ 				});
+ 			}
+ 
+-			start = normalRange.end;
++			if (start.diff(normalRange.end) < 0) { // start < normalRange.end
++				start = normalRange.end;
++			}
+ 		}
+ 
+ 		// add the span of time after the last event (if there is any)
+-- 
+1.9.3 (Apple Git-50)
+
